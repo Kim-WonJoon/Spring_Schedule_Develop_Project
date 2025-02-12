@@ -1,4 +1,4 @@
-package com.example.schedule_developlv1;
+package com.example.schedule_developLv1;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.example.schedule_developlv1;
+package com.example.schedule_developLv1;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
