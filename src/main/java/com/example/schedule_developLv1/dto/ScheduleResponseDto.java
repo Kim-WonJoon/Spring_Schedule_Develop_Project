@@ -1,5 +1,6 @@
 package com.example.schedule_developLv1.dto;
 
+import com.example.schedule_developLv1.entity.Schedule;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -12,11 +13,11 @@ public class ScheduleResponseDto {
     private final LocalDateTime writeTime;
     private final LocalDateTime updateTime;
 
-    public ScheduleResponseDto(Long id, String toDoTitle, String toDoContent, LocalDateTime writeTime, LocalDateTime updateTime) {
-        this.id = id;
-        this.toDoTitle = toDoTitle;
-        this.toDoContent = toDoContent;
-        this.writeTime = writeTime;
-        this.updateTime = updateTime;
+    public ScheduleResponseDto(Schedule schedule) {
+        this.id = schedule.getId();
+        this.toDoTitle = schedule.getToDoTitle();
+        this.toDoContent = schedule.getToDoContent();
+        this.writeTime = schedule.getWriteTime();
+        this.updateTime = schedule.getUpdateTime();
     }
 }

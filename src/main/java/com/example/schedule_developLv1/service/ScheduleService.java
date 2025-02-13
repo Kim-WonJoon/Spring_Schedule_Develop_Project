@@ -7,7 +7,6 @@ import com.example.schedule_developLv1.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +17,10 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
     @Transactional
-    public ScheduleResponseDto save(@RequestBody ScheduleRequestDto dto) {
+    public ScheduleResponseDto save(ScheduleRequestDto dto) {
         Schedule schedule = new Schedule(dto.getToDoTitle(), dto.getToDoContent());
         Schedule savedSchedule = scheduleRepository.save(schedule);
-        return new ScheduleResponseDto(savedSchedule.getId(), savedSchedule.getToDoTitle(), savedSchedule.getToDoContent(), schedule.getWriteTime(), schedule.getUpdateTime());
+        return new ScheduleResponseDto(savedSchedule);
     }
 
     public List<ScheduleResponseDto> findAll() {
@@ -29,7 +28,7 @@ public class ScheduleService {
 
         List<ScheduleResponseDto> dtos = new ArrayList<>();
         for (Schedule schedule : schedules) {
-            dtos.add(new ScheduleResponseDto(schedule.getId(), schedule.getToDoTitle(), schedule.getToDoContent(), schedule.getWriteTime(), schedule.getUpdateTime()));
+            dtos.add(new ScheduleResponseDto(schedule));
         }
         return dtos;
     }
@@ -38,16 +37,17 @@ public class ScheduleService {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 id의 스케쥴을 찾을 수 없음")
         );
-        return new ScheduleResponseDto(schedule.getId(), schedule.getToDoTitle(), schedule.getToDoContent(), schedule.getWriteTime(), schedule.getUpdateTime());
+        return new ScheduleResponseDto(schedule);
     }
 
+    @Transactional
     public ScheduleResponseDto update(Long id, ScheduleRequestDto dto) {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 id의 일정을 찾을 수 없음")
         );
 
         schedule.update(dto.getToDoTitle(), dto.getToDoContent());
-        return new ScheduleResponseDto(schedule.getId(), schedule.getToDoTitle(), schedule.getToDoContent(), schedule.getWriteTime(), schedule.getUpdateTime());
+        return new ScheduleResponseDto(schedule);
     }
 
     public void deleteById(Long id) {

@@ -14,24 +14,22 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 
-public class Schedule {
+public class Schedule extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String toDoTitle;
     private String toDoContent;
-    private LocalDateTime writeTime;
-    private LocalDateTime updateTime;
+
 
     public Schedule(String toDoTitle, String toDoContent) {
         this.toDoTitle = toDoTitle;
         this.toDoContent = toDoContent;
-        this.writeTime = LocalDateTime.now();
-        this.updateTime = this.writeTime;
+
     }
 
     public void update(String toDoTitle, String toDoContent) {
         this.toDoTitle = toDoTitle;
         this.toDoContent = toDoContent;
-        this.updateTime = LocalDateTime.now();
+
     }
 }
