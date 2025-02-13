@@ -6,4 +6,5 @@ import lombok.Getter;
 public class UserRequestSto {
     private String userName;
     private String email;
+    private String password;
 }

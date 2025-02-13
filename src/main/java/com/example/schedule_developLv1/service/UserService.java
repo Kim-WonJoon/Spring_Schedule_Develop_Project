@@ -17,10 +17,11 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
 
+    @Transactional(readOnly = true)
     public UserResponseDto createUser(UserRequestSto dto) {
-        User user = new User(dto.getUserName(), dto.getEmail());
+        User user = new User(dto.getUserName(), dto.getEmail(), dto.getPassword());
         User savedUser = userRepository.save(user);
-        return new UserResponseDto(savedUser);
+        return new UserResponseDto(savedUser.getId(), savedUser.getUserName(), savedUser.getEmail(), savedUser.getWriteTime(), savedUser.getUpdateTime());
     }
 
     public List<UserResponseDto> getAllUsers() {
@@ -28,7 +29,7 @@ public class UserService {
 
         List<UserResponseDto> dtos = new ArrayList<>();
         for (User user : users) {
-            dtos.add(new UserResponseDto(user));
+            dtos.add(new UserResponseDto(user.getId(), user.getUserName(), user.getEmail(), user.getWriteTime(), user.getUpdateTime()));
         }
         return dtos;
     }
@@ -37,7 +38,7 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 id의 유저 없음")
         );
-        return new UserResponseDto(user);
+        return new UserResponseDto(user.getId(), user.getUserName(), user.getEmail(), user.getWriteTime(), user.getUpdateTime());
     }
 
     @Transactional
@@ -45,9 +46,11 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 id의 유저 없음")
         );
-        return new UserResponseDto(user);
+        user.update(dto.getUserName(), dto.getEmail(), dto.getPassword());
+        return new UserResponseDto(user.getId(), user.getUserName(), user.getEmail(), user.getWriteTime(), user.getUpdateTime());
     }
 
+    @Transactional
     public void deleteUser(Long id) {
         if(!userRepository.existsById(id)) {
             throw new IllegalArgumentException("해당 id의 유저 없음");

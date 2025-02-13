@@ -13,11 +13,11 @@ public class UserResponseDto {
     private final LocalDateTime writeTime;
     private final LocalDateTime updateTime;
 
-    public UserResponseDto(User user) {
-        this.id = user.getId();
-        this.userName = user.getUserName();
-        this.email = user.getEmail();
-        this.writeTime = user.getWriteTime();
-        this.updateTime = user.getUpdateTime();
+    public UserResponseDto(Long id, String userName, String email, LocalDateTime writeTime, LocalDateTime updateTime) {
+        this.id = id;
+        this.userName = userName;
+        this.email = email;
+        this.writeTime = writeTime;
+        this.updateTime = updateTime;
     }
 }
