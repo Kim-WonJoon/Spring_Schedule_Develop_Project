@@ -1,14 +1,9 @@
 package com.example.schedule_developLv1.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -21,9 +16,14 @@ public class Schedule extends BaseEntity {
     private String toDoContent;
 
 
-    public Schedule(String toDoTitle, String toDoContent) {
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    public Schedule(String toDoTitle, String toDoContent, User user) {
         this.toDoTitle = toDoTitle;
         this.toDoContent = toDoContent;
+        this.user = user;
 
     }
 
